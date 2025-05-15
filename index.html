@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Notizen App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Notizen App</h1>
+            <p>Verbunden mit Azure Storage</p>
+        </header>
+        
+        <main>
+            <section class="upload-section">
+                <h2>Neue Notiz erstellen</h2>
+                <div class="input-group">
+                    <label for="note-title">Titel:</label>
+                    <input type="text" id="note-title" placeholder="Notiz Titel eingeben...">
+                </div>
+                <div class="input-group">
+                    <label for="note-content">Inhalt:</label>
+                    <textarea id="note-content" placeholder="Ihre Notiz hier eingeben..."></textarea>
+                </div>
+                <button id="save-note" class="btn">Notiz speichern</button>
+            </section>
+            
+            <section class="notes-list-section">
+                <h2>Meine Notizen</h2>
+                <div id="status-message"></div>
+                <ul id="notes-list">
+                    <!-- Notizen werden hier dynamisch eingefügt -->
+                </ul>
+            </section>
+        </main>
+        
+        <footer>
+            <p>© 2025 Azure Notizen App</p>
+        </footer>
+    </div>
+
+    <!-- Azure Storage SDK laden -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/azure-storage-blob/12.11.0/azure-storage-blob.min.js"></script>
+    
+    <!-- Eigenes JavaScript laden -->
+    <script src="script.js"></script>
+</body>
+</html>
