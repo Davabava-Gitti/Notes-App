@@ -53,50 +53,35 @@ function initializeAzureStorage() {
 async function saveNote() {
     const title = noteTitleInput.value.trim();
     const content = noteContentInput.value.trim();
-    
+
     if (!title || !content) {
-        showStatus('Bitte geben Sie einen Titel und Inhalt ein.', 'error');
+        showStatus("Bitte Titel und Inhalt eingeben", "error");
         return;
     }
-    
+
+    showStatus("Wird gespeichert...", "");
+
     try {
-        showStatus('Notiz wird gespeichert...', '');
-        
-        // Dateiname generieren (mit Datum für Eindeutigkeit)
-        const fileName = `${title}-${new Date().toISOString().replace(/[:.]/g, '-')}.txt`;
-        
-        // Blob Client erstellen
-        const blockBlobClient = containerClient.getBlockBlobClient(fileName);
-        
-        // Metadaten erstellen (speichert auch den Titel)
-        const metadata = {
-            title: title,
-            createdAt: new Date().toISOString()
-        };
-        
-        // Notiz hochladen
-        await blockBlobClient.upload(content, content.length, {
-            metadata: metadata,
-            blobHTTPHeaders: {
-                blobContentType: "text/plain"
-            }
+        const response = await fetch("/api/addNote", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ title, content })
         });
-        
-        // Erfolg anzeigen
-        showStatus('Notiz erfolgreich gespeichert!', 'success');
-        
-        // Eingabefelder leeren
-        noteTitleInput.value = '';
-        noteContentInput.value = '';
-        
-        // Notizen neu laden
-        await listNotes();
-        
+
+        const result = await response.json();
+
+        if (!response.ok) throw new Error(result.message || "Unbekannter Fehler");
+
+        showStatus("Notiz gespeichert!", "success");
+
+        noteTitleInput.value = "";
+        noteContentInput.value = "";
     } catch (error) {
-        showStatus('Fehler beim Speichern der Notiz: ' + error.message, 'error');
-        console.error('Save error:', error);
+        showStatus("Fehler: " + error.message, "error");
+        console.error(error);
     }
 }
+
 
 // Notizen auflisten
 async function listNotes() {

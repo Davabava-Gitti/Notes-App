@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/70dbdc5f-6482-42f2-b552-4e4463d32034/resourceGroups/M210_LG24_ZUG/providers/Microsoft.Web/sites/notesappdocker",
+    "appService.deploySubpath": "."
+}
